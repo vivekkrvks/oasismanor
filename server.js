@@ -46,7 +46,7 @@ app.use(cors());
 //Middleware for bodyparser
 app.use(bodyparser.urlencoded({ extended: false, limit: "50mb" }));
 app.use(bodyparser.json());
-app.use(express.static(path.join(_dirname, "client/build")))
+app.use(express.static(path.join(__dirname, "client/build")))
 
 //mongoDB configuration
 const db = require("./setup/myurl").mongoURL;
