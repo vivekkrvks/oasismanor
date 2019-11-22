@@ -1,0 +1,138 @@
+.bgArea {
+  background: radial-gradient(circle, rgba(238, 253, 242, 0.8830882694874825) 0%, rgba(31, 224, 111, 0.342472022988883) 100%);
+  padding: 1.2rem;
+}
+.bgArea img {
+  max-width: 100%;
+  height: auto !important;
+}
+.fab {
+  margin: 10px;
+  font-family: "Open Sans", sans-serif !important;
+}
+.link {
+  text-decoration: "none";
+}
+
+.feathers {
+  padding: 1.2rem;
+  background: radial-gradient(circle, rgba(243, 253, 246, 0.883) 0%, rgba(82, 250, 70, 0.508) 100%);
+}
+.card {
+  height: 350px;
+  width: 300px;
+  margin-top: 1.2rem;
+  border-radius: 18px;
+  background: white;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.9);
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.card-img {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  background-size: cover;
+  display: block;
+  overflow: hidden;
+  border-bottom: 2px rgb(43, 231, 50) solid;
+  max-width: 300px;
+  height: auto !important;
+}
+.card-down {
+  bottom: 0;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  background: rgb(255, 7, 110);
+}
+.card:hover {
+  transform: scale(1.02);
+}
+
+.vdo {
+  height: 50vh;
+  width: 100vw;
+  background-image: url("https://i.ibb.co/P6TPz83/videoImg.jpg");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.8;
+  background-size: cover;
+}
+#playBtn {
+  color: red;
+  width: 40px;
+  height: 40px;
+  opacity: 1;
+  margin-left: 50vw;
+  margin-top: 25vh;
+}
+#testimonial {
+  padding-top: 25px;
+  padding-bottom: 25px;
+  height: 400;
+  background: #fff;
+}
+.top-look {
+  top: 0%;
+  height: 20vh;
+  background: radial-gradient(circle, rgba(103, 224, 216, 0.7430322470785189) 30%, rgba(74, 195, 98, 0.9026961126247374) 100%);
+}
+
+.font {
+  font-family: "Open Sans", sans-serif !important;
+  margin: 10;
+}
+
+.list {
+  font-size: 1rem;
+  list-style-image: url("./svg/arrow.svg");
+}
+.list li:hover {
+  font-size: 1.1rem;
+  transition: all 0.5s ease;
+}
+.list2 {
+  font-size: 1rem;
+  list-style-type: none;
+  color: #4527b0;
+  line-height: 1.6rem;
+  list-style-image: url("./svg/leaf.svg");
+}
+
+.social img {
+  padding: 0.5rem;
+  margin-left: auto;
+  display: inline-block;
+  margin-right: auto;
+}
+.social img:hover {
+  animation-name: spin;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.heading {
+  color: #fff;
+  margin-top: 25vh !important;
+  max-width: 600px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background: rgb(63, 94, 251);
+  background: linear-gradient(174deg, rgba(63, 94, 251, 0.4797269249496674) 27%, rgba(252, 70, 107, 0.5833683815323004) 77%);
+}
