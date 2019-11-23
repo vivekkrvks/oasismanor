@@ -1,13 +1,12 @@
-import React, { Component } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Redirect } from "react-router-dom";
-import PropTypes from "prop-types";
 import setAuthToken from "../utils/setAuthToken";
-import { withStyles, Avatar, Button, Paper, Typography, InputAdornment, FormControlLabel, Switch, TextField, Container } from "@material-ui/core";
+import { makeStyles, Avatar, Button, Paper, Typography, TextField, Container } from "@material-ui/core";
 import LockIcon from "@material-ui/icons/LockOutlined";
 import axios from "axios";
-import MySnackbar from "./MySnackbar";
+import { MainContext } from "./MainContext";
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
   root: {
     width: "auto",
     display: "block",
@@ -45,130 +44,181 @@ const styles = theme => ({
   submit: {
     marginTop: theme.spacing()
   }
-});
+}));
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    const token = localStorage.getItem("token");
-    let loggedIn = true;
-    if (token == null) {
-      loggedIn = false;
+export default function Login() {
+  const classes = useStyles();
+  const { userInfo, setUserInfo } = useContext(MainContext);
+
+  const [loggedIn, setLoggedIn] = useState();
+  useEffect(() => {
+    if (userInfo.token) {
+      setLoggedIn(true);
     }
-    this.state = {
-      mobileNo: "",
-      otp: "",
-      usePassword: false,
-      showPassword: false,
-      userName: "",
-      password: "",
-      loggedIn
-    };
-  }
-  handleChange = prop => event => {
-    this.setState({ [prop]: event.target.value });
+  }, []);
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = () => {
+    let loginData = { emailId: userName, password: password };
+    axios
+      .post("/api/auth/login", loginData)
+      .then(res => {
+        if (res.data.token) {
+          setAuthToken(res.data.token);
+          setUserInfo(res.data);
+          setLoggedIn(true);
+        } else {
+          alert(res.data.message);
+        }
+      })
+      .catch(err => console.log(err));
   };
 
-  handleLogin = () => {
-    const { mobileNo, otp, usePassword } = this.state;
-    const loginData = {
-      emailId: this.state.userName,
-      password: this.state.password
-    };
-
-    if (usePassword === true) {
-      // use Password Login Code
-      axios
-        .post("/api/auth/login", loginData)
-        .then(res => {
-          if (res.data.token) {
-            localStorage.setItem("token", res.data.token);
-            localStorage.setItem("designation", res.data.designation);
-            localStorage.setItem("userImage", res.data.userImage);
-            localStorage.setItem("name", res.data.name);
-            localStorage.setItem("id", res.data.id);
-            this.setState({ loggedIn: true });
-            setAuthToken(res.data.token);
-            
-          }else{
-            this.child.handleSnackbar(res.data);
-
-          }
-        })
-        .catch(err => console.log(err));
-    } else {
-      // use mobile-OTP Login code
-      console.log(mobileNo, otp);
-      // if (mobileNo === "123" && otp === "123") {
-      //   this.setState({ loggedIn: true });
-      //   localStorage.setItem("token", "sadjksjajdkajsdak");
-      // }
-    }
-  };
-
-  render() {
-    if (this.state.loggedIn) {
-      return <Redirect to="/dashboard" />;
-    }
-    const { classes } = this.props;
-    return (
-      <section className={classes.root}>
-        <Container>
-          <Paper className={classes.paper}>
-            <Avatar className={classes.avatar}>
-              <LockIcon />
-            </Avatar>
-            <Typography align="center" color="primary" variant="inherit">
-              Welcome to Oasis Manors
-            </Typography>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={this.state.usePassword}
-                  onChange={() => this.setState({ usePassword: !this.state.usePassword })}
-                  value={this.state.usePassword ? "Use Password" : "Use Mobile (OTP)"}
-                />
-              }
-              label={this.state.usePassword ? "Use Password" : "Use Mobile - OTP"}
-            />
-
-            {this.state.usePassword ? (
-              <div id="usePassword">
-                <TextField id="userName" autoFocus fullWidth onChange={this.handleChange("userName")} margin="normal" variant="outlined" label="Enter User Name" />
-                <TextField id="password" fullWidth onChange={this.handleChange("password")} margin="normal" variant="outlined" type="password" label="Password" />
-              </div>
-            ) : (
-              <form className={classes.form}>
-                <TextField
-                  id="mobileNo"
-                  autoFocus
-                  onChange={this.handleChange("mobileNo")}
-                  margin="normal"
-                  variant="outlined"
-                  label="Mobile Number"
-                  InputProps={{
-                    startAdornment: <InputAdornment position="start">+91 </InputAdornment>
-                  }}
-                />
-                <Button variant="outlined" color="primary" className={classes.otpBtn}>
-                  Get OTP
-                </Button>
-                <TextField id="otp" onChange={this.handleChange("otp")} variant="outlined" label="Enter OTP" />
-              </form>
-            )}
-            <Button fullWidth variant="contained" onClick={() => this.handleLogin()} color="primary" className={classes.submit}>
-              Sign in
-            </Button>
-          </Paper>
-          <MySnackbar onRef={ref => (this.child = ref)} />
-        </Container>
-      </section>
-    );
+  if (loggedIn) {
+    return <Redirect to="/dashboard" />;
   }
+  return (
+    <section className={classes.root}>
+      <Container>
+        <Paper className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockIcon />
+          </Avatar>
+          <Typography align="center" gutterBottom color="primary" variant="inherit">
+            Welcome to Oasis Manors
+          </Typography>
+          <TextField id="userName" autoFocus fullWidth onChange={e => setUserName(e.target.value)} value={userName} margin="normal" variant="outlined" label="Enter User Name" />
+          <TextField id="password" fullWidth onChange={e => setPassword(e.target.value)} value={password} margin="normal" variant="outlined" type="password" label="Password" />
+          <Button fullWidth variant="contained" onClick={() => handleLogin()} color="primary" className={classes.submit}>
+            Sign in
+          </Button>
+        </Paper>
+      </Container>
+    </section>
+  );
 }
 
-Login.propTypes = {
-  classes: PropTypes.object.isRequired
-};
+// class Login extends Component {
+//   constructor(props) {
+//     super(props);
+//     const token = localStorage.getItem("token");
+//     let loggedIn = true;
+//     if (token == null) {
+//       loggedIn = false;
+//     }
+//     this.state = {
+//       mobileNo: "",
+//       otp: "",
+//       usePassword: false,
+//       showPassword: false,
+//       userName: "",
+//       password: "",
+//       loggedIn
+//     };
+//   }
+//   handleChange = prop => event => {
+//     this.setState({ [prop]: event.target.value });
+//   };
 
-export default withStyles(styles)(Login);
+//   handleLogin = () => {
+//     const { mobileNo, otp, usePassword } = this.state;
+//     const loginData = {
+//       emailId: this.state.userName,
+//       password: this.state.password
+//     };
+
+//     if (usePassword === true) {
+//       // use Password Login Code
+//       axios
+//         .post("/api/auth/login", loginData)
+//         .then(res => {
+//           if (res.data.token) {
+//             localStorage.setItem("token", res.data.token);
+//             localStorage.setItem("designation", res.data.designation);
+//             localStorage.setItem("userImage", res.data.userImage);
+//             localStorage.setItem("name", res.data.name);
+//             localStorage.setItem("id", res.data.id);
+//             this.setState({ loggedIn: true });
+//             setAuthToken(res.data.token);
+//           } else {
+//             this.child.handleSnackbar(res.data);
+//           }
+//         })
+//         .catch(err => console.log(err));
+//     } else {
+//       // use mobile-OTP Login code
+//       console.log(mobileNo, otp);
+//       // if (mobileNo === "123" && otp === "123") {
+//       //   this.setState({ loggedIn: true });
+//       //   localStorage.setItem("token", "sadjksjajdkajsdak");
+//       // }
+//     }
+//   };
+
+//   render() {
+//     if (this.state.loggedIn) {
+//       return <Redirect to="/dashboard" />;
+//     }
+//     const { classes } = this.props;
+//     return (
+//       <section className={classes.root}>
+//         <Container>
+//           <Paper className={classes.paper}>
+//             <Avatar className={classes.avatar}>
+//               <LockIcon />
+//             </Avatar>
+//             <Typography align="center" color="primary" variant="inherit">
+//               Welcome to Oasis Manors
+//             </Typography>
+//             <FormControlLabel
+//               control={
+//                 <Switch
+//                   checked={this.state.usePassword}
+//                   onChange={() => this.setState({ usePassword: !this.state.usePassword })}
+//                   value={this.state.usePassword ? "Use Password" : "Use Mobile (OTP)"}
+//                 />
+//               }
+//               label={this.state.usePassword ? "Use Password" : "Use Mobile - OTP"}
+//             />
+
+//             {this.state.usePassword ? (
+//               <div id="usePassword">
+//                 <TextField id="userName" autoFocus fullWidth onChange={this.handleChange("userName")} margin="normal" variant="outlined" label="Enter User Name" />
+//                 <TextField id="password" fullWidth onChange={this.handleChange("password")} margin="normal" variant="outlined" type="password" label="Password" />
+//               </div>
+//             ) : (
+//               <form className={classes.form}>
+//                 <TextField
+//                   id="mobileNo"
+//                   autoFocus
+//                   onChange={this.handleChange("mobileNo")}
+//                   margin="normal"
+//                   variant="outlined"
+//                   label="Mobile Number"
+//                   InputProps={{
+//                     startAdornment: <InputAdornment position="start">+91 </InputAdornment>
+//                   }}
+//                 />
+//                 <Button variant="outlined" color="primary" className={classes.otpBtn}>
+//                   Get OTP
+//                 </Button>
+//                 <TextField id="otp" onChange={this.handleChange("otp")} variant="outlined" label="Enter OTP" />
+//               </form>
+//             )}
+//             <Button fullWidth variant="contained" onClick={() => this.handleLogin()} color="primary" className={classes.submit}>
+//               Sign in
+//             </Button>
+//           </Paper>
+//           <MySnackbar onRef={ref => (this.child = ref)} />
+//         </Container>
+//       </section>
+//     );
+//   }
+// }
+
+// Login.propTypes = {
+//   classes: PropTypes.object.isRequired
+// };
+
+// export default withStyles(styles)(Login);

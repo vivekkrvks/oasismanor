@@ -1,6 +1,6 @@
 import React, { Fragment, Component } from "react";
 import PropTypes from "prop-types";
-import { AppBar, Toolbar, withStyles, CssBaseline, useScrollTrigger, Button, Hidden, SwipeableDrawer, Slide, IconButton, Tooltip } from "@material-ui/core/";
+import { AppBar, Toolbar, withStyles, CssBaseline, useScrollTrigger, Button, Hidden, SwipeableDrawer, Slide, IconButton, Avatar } from "@material-ui/core/";
 import { AccountCircle } from "@material-ui/icons";
 import MenuIcon from "@material-ui/icons/Menu";
 import MyDrawer from "./Components/MyDrawer";
@@ -8,6 +8,7 @@ import MainRoute from "./Components/MainRoute";
 import { Link } from "react-router-dom";
 import logo from "./svg/logo.svg";
 import "./App.css";
+import { MainContext } from "./Components/MainContext";
 
 const styles = theme => ({
   grow: {
@@ -58,11 +59,13 @@ class App extends Component {
       drawerOpen: false
     };
   }
+  static contextType = MainContext;
   handleDrawerToggle = () => {
     this.setState(state => ({ drawerOpen: !state.drawerOpen }));
   };
   render() {
     const { classes } = this.props;
+    const { userInfo } = this.context;
     return (
       <Fragment>
         <CssBaseline />
@@ -103,13 +106,15 @@ class App extends Component {
                   </Button>
                 </Link>
               </div>
-              <Link to="/login" className={classes.anchor}>
-                <Tooltip title="Login">
+              {userInfo.designation ? (
+                <Avatar alt="user-Img" src={userInfo.userImage ? userInfo.userImage : "https://image.ibb.co/hXNh1z/img.jpg"} />
+              ) : (
+                <Link to="/login" className={classes.anchor}>
                   <IconButton color="primary">
                     <AccountCircle />
                   </IconButton>
-                </Tooltip>
-              </Link>
+                </Link>
+              )}
             </Toolbar>
           </AppBar>
         </HideOnScroll>

@@ -1,21 +1,24 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, Typography } from "@material-ui/core/";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles(theme => ({
   page: {
     position: "fixed",
     zIndex: 5,
-    left: "50%",
-    top: "50%",
-    height: 70,
-    width: 70,
+    left: "45vw",
+    top: "45vh",
+    height: 110,
+    width: 110,
     borderRadius: 10,
     opacity: 1,
-    backgroundColor: "rgba(0,0,0,0.4)"
+    backgroundColor: "rgba(0,0,0,0.2)"
   },
   progress: {
-    margin: theme.spacing(2)
+    marginTop: theme.spacing(2),
+    marginLeft: theme.spacing(4),
+    marginRight: theme.spacing(3),
+    marginBottom: theme.spacing(2)
   }
 }));
 
@@ -25,6 +28,9 @@ export default function Progress() {
   return (
     <div className={classes.page}>
       <CircularProgress className={classes.progress} color="secondary" />
+      <Typography align="center" color="secondary">
+        Loading...
+      </Typography>
     </div>
   );
 }

@@ -200,7 +200,6 @@ class Home extends Component {
               <br />
               <Divider variant="middle" light />
               <br />
-
               <Link to="/amenities" className="link">
                 <Fab variant="extended" size="medium" color="secondary" aria-label="add" className="fab">
                   See All Amenities

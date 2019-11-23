@@ -22,6 +22,7 @@ import {
 import axios from "axios";
 import MySnackbar from "./MySnackbar";
 import Progress from "./Progress";
+import { MainContext } from "./MainContext";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { AccountBalanceWallet } from "@material-ui/icons/";
 const styles = theme => ({
@@ -75,8 +76,11 @@ class MyAccount extends Component {
     };
   }
 
+  static contextType = MainContext;
+
   componentWillMount() {
-    this.getUser(localStorage.getItem("id"));
+    const { userInfo } = this.context;
+    this.getUser(userInfo.id);
   }
   handleChange = name => event => {
     this.setState({
@@ -84,13 +88,12 @@ class MyAccount extends Component {
     });
   };
   handlePassChange = () => {
-    const {id, oldPass, newPass, repeatPass } = this.state;
+    const { id, oldPass, newPass, repeatPass } = this.state;
     if (newPass === repeatPass) {
-     const pass ={ oldPass:oldPass, newPass:newPass }
+      const pass = { oldPass: oldPass, newPass: newPass };
       axios
         .post(`/api/auth/register/pass/${id}`, pass)
-        .then(res => 
-          this.child.handleSnackbar(res.data))
+        .then(res => this.child.handleSnackbar(res.data))
         .catch(err => console.log(err));
     } else {
       this.child.handleSnackbar({ message: "Password Do not matched.", variant: "error" });
@@ -299,7 +302,7 @@ class MyAccount extends Component {
                 </Grid>
                 <Grid item xs={12}>
                   <center>
-                    <Chip onClick={() => this.handlePassChange()} label="Change Password" />
+                    <Chip onClick={() => this.handlePassChange()} color="primary" label="Change Password" />
                   </center>
                 </Grid>
               </Grid>
