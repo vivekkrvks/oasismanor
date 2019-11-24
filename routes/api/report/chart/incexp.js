@@ -30,9 +30,7 @@ async function myasyfun(res, value) {
       let totalReciptDiscount = 0;
       let totalPaymentAmount = 0;
       let totalPaymentDiscount = 0;
-      let salary = 5;
-      let duration;
-      let joiningDate;
+
       let facilityCharge = 0;
 
       var today = new Date()

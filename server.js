@@ -31,6 +31,7 @@ const alltransaction = require("./routes/api/report/transactionreport/alltransac
 const userchart = require("./routes/api/report/chart/userchart");
 const enquiryList = require("./routes/api/report/chart/enquiryList");
 const enqgraph = require("./routes/api/report/chart/enqgraph");
+const incexp = require("./routes/api/report/chart/incexp");
 
 // other
 const room = require("./routes/api/other/room");
@@ -81,6 +82,7 @@ app.use("/api/report/transactionreport/alltransaction", alltransaction);
 app.use("/api/report/chart/userchart", userchart);
 app.use("/api/report/chart/enquiryList", enquiryList);
 app.use("/api/report/chart/enqgraph", enqgraph);
+app.use("/api/report/chart/incexp", incexp);
 //other
 app.use("/api/other/room", room);
 app.use("/api/other/fileupload", fileupload);
