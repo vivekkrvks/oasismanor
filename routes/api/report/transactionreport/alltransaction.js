@@ -13,7 +13,7 @@ const PaymentVoucher = require("../../../../models/Transaction/PaymentVoucher");
 const RequestFacilities = require("../../../../models/Emp/RequestFacilities");
 const UploadUtility = require("../../../../models/Emp/UploadUtility");
 
-
+let t = 0;
 // @type    get
 // @route    /api/report/transactionreport/alltransaction/get/:id
 router.get(
@@ -59,6 +59,10 @@ router.get(
        
         _id: value 
       }).then(Person => {
+        duration = Person.duration;
+
+        if (duration == "Monthly"){
+
 
         if (Person) {
           salary = parseFloat((Person.salary = Person.salary || 0));
@@ -99,21 +103,34 @@ while (i<totalMonth) {
     const monthNames = ["zero","January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
   ];
-    obj.date =ds  + "-" + ts + "-" +ys ;
-    obj.k =  ys+ "-" + ts + "-" +ds  ;
+   
     
 if (designation == "Guest") {
+  if (duration == "Monthly"){
+    obj.date =ds  + "-" + ts + "-" +ys ;
+    obj.k =  ys+ "-" + ts + "-" +ds  ;
   obj.debit = "" +salary+"";
   obj.credit =  "";
   obj.particulars = "Rent";
    
   obj.naration = "Rent of " + monthNames[ms] +" "  + ys;
+  } else {
+    console.log("rent is hourly");
+  
+  }
 } else {
+  if (duration == "Monthly"){
+    obj.date =ds  + "-" + ts + "-" +ys ;
+    obj.k =  ys+ "-" + ts + "-" +ds  ;
   obj.debit = ""; 
     obj.credit = "" +salary+"";
     obj.particulars = "Salary";
      
     obj.naration = "Salary of " + monthNames[ms] +" "  + ys;
+  } else {
+    console.log("salery is hourly")
+
+  }
 }
     
 
@@ -130,8 +147,10 @@ if (designation == "Guest") {
           console.log("Given id is not associated with any profile");
           
         }  
-         
-       
+      } else {
+        console.log("hourly")
+      }
+      
       }).catch(err => console.log(err));
   
      
@@ -145,7 +164,7 @@ if (designation == "Guest") {
     user: value,
     paid: "false"
   }).catch(err =>
-    res.json({ message: "No request Voucher Found" + err })
+    console.log(err)
   );
 
   RequestFacilities1.forEach(one => {
@@ -154,7 +173,12 @@ if (designation == "Guest") {
   
     obj.date = one.date.split("-").reverse().join("-");
     obj.particulars = "Extra Facility";
-    obj.debit = one.total;
+    // one.facilities.forEach(k => {
+    //   t +=  parseFloat((k.price = k.price || 0)) ;
+
+    // })
+    // obj.debit = ""+ t + ""
+    obj.debit = ""+ one.total + "";
     obj.k = one.date;
     obj.credit = "";
  

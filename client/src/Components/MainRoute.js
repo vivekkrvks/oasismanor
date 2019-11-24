@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
-import setAuthToken from "../utils/setAuthToken";
 import Home from "../Website/Home";
 import Login from "./Login";
 import Blog from "../Website/Blog";
@@ -18,25 +17,25 @@ import Utility from "../Website/Utility";
 import Contact from "../Website/Contact";
 import Transaction from "../Website/Transaction";
 // Check for token
-if (localStorage.token) {
-  // Set auth token header auth
-  setAuthToken(localStorage.token);
-  // // Decode token and get user info and exp
-  // const decoded = jwt_decode(localStorage.jwtToken);
-  // // Set user and isAuthenticated
-  // store.dispatch(setCurrentUser(decoded));
+// if (localStorage.token) {
+// Set auth token header auth
+// setAuthToken(localStorage.token);
+// // Decode token and get user info and exp
+// const decoded = jwt_decode(localStorage.jwtToken);
+// // Set user and isAuthenticated
+// store.dispatch(setCurrentUser(decoded));
 
-  // // Check for expired token
-  // const currentTime = Date.now() / 1000;
-  // if (decoded.exp < currentTime) {
-  //   // Logout user
-  //   store.dispatch(logoutUser());
-  //   // Clear current Profile
-  //   //store.dispatch(clearCurrentProfile());
-  //   // Redirect to login
-  //   window.location.href = "/login";
-  // }
-}
+// // Check for expired token
+// const currentTime = Date.now() / 1000;
+// if (decoded.exp < currentTime) {
+//   // Logout user
+//   store.dispatch(logoutUser());
+//   // Clear current Profile
+//   //store.dispatch(clearCurrentProfile());
+//   // Redirect to login
+//   window.location.href = "/login";
+// }
+// }
 
 export class MainRoute extends Component {
   render() {

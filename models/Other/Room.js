@@ -56,7 +56,7 @@ module.exports = Room = mongoose.model("myroom", RoomSchema);
 
 function getDate() {
   var d = new Date();
-  return d.getDate();
+  return (d.getDate());
 }
 
 function getMonth() {

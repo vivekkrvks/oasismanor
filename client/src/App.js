@@ -107,7 +107,9 @@ class App extends Component {
                 </Link>
               </div>
               {userInfo.designation ? (
-                <Avatar alt="user-Img" src={userInfo.userImage ? userInfo.userImage : "https://image.ibb.co/hXNh1z/img.jpg"} />
+                <Link to="/dashboard">
+                  <Avatar alt="user-Img" src={userInfo.userImage ? userInfo.userImage : "https://i.ibb.co/zQ9M9xV/user.png"} />
+                </Link>
               ) : (
                 <Link to="/login" className={classes.anchor}>
                   <IconButton color="primary">

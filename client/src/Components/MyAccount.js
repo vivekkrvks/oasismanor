@@ -78,7 +78,7 @@ class MyAccount extends Component {
 
   static contextType = MainContext;
 
-  componentWillMount() {
+  componentDidMount() {
     const { userInfo } = this.context;
     this.getUser(userInfo.id);
   }

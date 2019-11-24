@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { withStyles, Container, Chip, Grid, Paper, Table, TableBody, TableRow, TableCell, TablePagination, TableFooter, TableHead } from "@material-ui/core";
 import { styles } from "../Components/Style";
+import { MainContext } from "../Components/MainContext";
 import Progress from "../Components/Progress";
 import Select from "react-select";
 import axios from "axios";
@@ -21,11 +22,13 @@ class Transaction extends Component {
       rowsPerPage: 20
     };
   }
+  static contextType = MainContext;
 
   componentWillMount() {
-    const name = localStorage.getItem("name");
-    const id = localStorage.getItem("id");
-    const designation = localStorage.getItem("designation");
+    const { userInfo } = this.context;
+    const name = userInfo.name;
+    const id = userInfo.id;
+    const designation = userInfo.designation;
     this.setState({ name, id });
     if (designation === "Admin" || designation === "Manager") {
       this.getUsers();

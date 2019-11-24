@@ -60,7 +60,7 @@ export default function MyDrawer(props) {
         <span className={classes.avatarPosition}>
           <center>
             <Chip label={userInfo.name ? `Welcome ${userInfo.name}` : `Welcome Visitor`} color="primary" className={classes.chip} />{" "}
-            <Avatar alt="user-Img" src={userInfo.userImage ? `${userInfo.userImage}` : `https://i.ibb.co/6wHq3Zw/guest.jpg`} className={classes.avatar} />
+            <Avatar alt="user-Img" src={userInfo.userImage ? `${userInfo.userImage}` : `https://i.ibb.co/zQ9M9xV/user.png`} className={classes.avatar} />
           </center>
         </span>
       </div>

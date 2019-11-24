@@ -109,7 +109,8 @@ class RequestFacilities extends Component {
       refNo: this.state.refNo,
       voucherNo: this.state.voucherNo,
       document: this.state.document,
-      remarks: this.state.remarks
+      remarks: this.state.remarks,
+      total: this.state.total
     };
     let route = "/api/emp/requestfacilities/";
     route += this.state.id;
@@ -133,9 +134,7 @@ class RequestFacilities extends Component {
       refNo: "",
       document: "",
       paid: false,
-
       remarks: "",
-
       total: 0,
       loading: false
     });

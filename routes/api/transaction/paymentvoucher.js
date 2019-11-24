@@ -30,9 +30,9 @@ router.post(
 
     paymentVoucherValues.date = req.body.date;
    
-    paymentVoucherValues.dateC = d.dateC;
-    paymentVoucherValues.monthC = d.monthC;
-    paymentVoucherValues.yearC = d.yearC;
+    // paymentVoucherValues.dateC = d.dateC;
+    // paymentVoucherValues.monthC = d.monthC;
+    // paymentVoucherValues.yearC = d.yearC;
 
     paymentVoucherValues.ledger.label = req.body.ledger.label;
     paymentVoucherValues.ledger.ledgerId = req.body.ledger.ledgerId;
@@ -46,7 +46,6 @@ router.post(
     paymentVoucherValues.discount = req.body.discount;
 
     paymentVoucherValues.remarks = req.body.remarks;
-    receiptVoucherValues.designation = req.user.designation;
 
 
     paymentVoucherValues.reminderDate = req.body.reminderDate;

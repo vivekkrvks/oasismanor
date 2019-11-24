@@ -224,10 +224,16 @@ router.get("/guest", passport.authenticate("jwt", { session: false }), (req, res
 //@route    /api/auth/get/:id
 // @desc    route for personnal user
 // @access  PRIVATE
-router.get("/get/:id", (req, res) => {
- 
 
 
+//bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+router.get("/get/:id", passport.authenticate("jwt", { session: false }), (req, res) => {
+  var des = req.user.designation;
+  var des1 = "Admin";
+  var des2 = "Manager";
+  var myId = req.user._id;
+
+  if (des == des1 || des == des2) {
     Person.find({ _id: req.params.id })
 
       .then(Person => res.json(Person))
@@ -237,32 +243,23 @@ router.get("/get/:id", (req, res) => {
           variant: "error"
         })
       );
-  
+  } else if (myId == req.params.id){
+    Person.find({ _id: req.params.id })
+
+    .then(Person => res.json(Person))
+    .catch(err =>
+      res.status(404).json({
+        message: "No User Found",
+        variant: "error"
+      })
+    );
+  } else {
+    res.json({
+      message: "You are not authorised ",
+      variant: "error"
+    });
+  }
 });
-
-//bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-// router.get("/get/:id", passport.authenticate("jwt", { session: false }), (req, res) => {
-//   var des = req.user.designation;
-//   var des1 = "Admin";
-//   var des2 = "Manager";
-
-//   if (des == des1 || des == des2) {
-//     Person.find({ _id: req.params.id })
-
-//       .then(Person => res.json(Person))
-//       .catch(err =>
-//         res.status(404).json({
-//           message: "No User Found",
-//           variant: "error"
-//         })
-//       );
-//   } else {
-//     res.json({
-//       message: "You are not authorised ",
-//       variant: "error"
-//     });
-//   }
-// });
 //bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 // @type    get
 //@route    /api/auth/person/:searchperson

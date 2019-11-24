@@ -31,8 +31,6 @@ const alltransaction = require("./routes/api/report/transactionreport/alltransac
 const userchart = require("./routes/api/report/chart/userchart");
 const enquiryList = require("./routes/api/report/chart/enquiryList");
 const enqgraph = require("./routes/api/report/chart/enqgraph");
-const incexp = require("./routes/api/report/chart/incexp");
-const duerent = require("./routes/api/report/chart/duerent");
 
 // other
 const room = require("./routes/api/other/room");
@@ -48,12 +46,13 @@ app.use(bodyparser.urlencoded({ extended: false, limit: "50mb" }));
 app.use(bodyparser.json());
 app.use(express.static(path.join(__dirname, "client/build")))
 
+
 //mongoDB configuration
 const db = require("./setup/myurl").mongoURL;
 
 //Attempt to connect to database
 mongoose
-  .connect(db, { useFindAndModify: false , useNewUrlParser: true })
+  .connect(db , { useNewUrlParser: true })
   .then(() => console.log(" MongoDB connected successfully"))
   .catch(err => console.log(err));
 
@@ -82,8 +81,6 @@ app.use("/api/report/transactionreport/alltransaction", alltransaction);
 app.use("/api/report/chart/userchart", userchart);
 app.use("/api/report/chart/enquiryList", enquiryList);
 app.use("/api/report/chart/enqgraph", enqgraph);
-app.use("/api/report/chart/incexp", incexp);
-app.use("/api/report/chart/duerent", duerent);
 //other
 app.use("/api/other/room", room);
 app.use("/api/other/fileupload", fileupload);
@@ -97,7 +94,6 @@ app.get("/*", function(req, res) {
     }
   });
 });
-
 
 const port = process.env.PORT || 2030;
 

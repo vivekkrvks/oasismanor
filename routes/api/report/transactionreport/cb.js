@@ -79,7 +79,6 @@ var y = q.getFullYear();
 var ys = joiningDate.slice(0,4);
 var ms = joiningDate.slice(5,7);
 var ds = joiningDate.slice(8,10);
-console.log();
 var yt = y - ys;
 if (d>= ds) {
   var mt = m - ms;
@@ -98,7 +97,7 @@ if(totalMonth <=0 ){var totalPay = 0}else if (duration == "Monthly"){
   var totalPay = 0
 }
 
-      console.log( " totalReciptAmount: " + totalReciptAmount  +", totalPaymentAmount = " + totalPaymentAmount + ", totalPay:  "+  totalPay + ",  fc:  " + facilityCharge) 
+      // console.log(  "tt"+ totalMonth + salary + " totalReciptAmount: " + totalReciptAmount  +", totalPaymentAmount = " + totalPaymentAmount + ", totalPay:  "+  totalPay + ",  fc:  " + facilityCharge) 
 
  //json responce
  if(designation == "Guest" ){

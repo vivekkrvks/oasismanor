@@ -4,7 +4,6 @@ import { AdminChart } from "./Chart";
 import { FaChartBar, FaTable, FaUserEdit, FaTrash } from "react-icons/fa";
 import MyAccount from "./MyAccount";
 import { MainContext } from "./MainContext";
-import { Redirect } from "react-router-dom";
 import axios from "axios";
 
 const useStyles = makeStyles(theme => ({
@@ -54,19 +53,42 @@ export default function Dashboard() {
       );
 
     case "Manager":
-      return <div>I am manager</div>;
+      return (
+        <Fragment>
+          <BottomNav />
+          <AdminChart />
+        </Fragment>
+      );
 
     case "Worker":
-      return <div>I am Worker</div>;
+      return (
+        <Fragment>
+          <MyAccount />
+        </Fragment>
+      );
 
     case "Guest":
-      return <div>I am Guest</div>;
+      return (
+        <Fragment>
+          <MyAccount />
+        </Fragment>
+      );
 
     case "Family":
-      return <div>I am Family</div>;
+      return (
+        <Fragment>
+          <MyAccount />
+        </Fragment>
+      );
 
     default:
-      return <Redirect to="/login" />;
+      return (
+        <Fragment>
+          <Typography align="center" color="secondary">
+            Sorry, Your designation is not defined, please contact Admin.
+          </Typography>
+        </Fragment>
+      );
   }
 }
 

@@ -88,27 +88,6 @@ finData = {
 // @desc    route for personnal user receiptvoucher
 // @access  PRIVATE
 
-router.get(
-  "/get/",
- 
-  (req, res) => {
-   
-    
-    Person.findOne({ }).then(personResult => {
-      if (personResult) {
-        var id = 50;
-        getUserNum(res, id).then(() => {
-          res.json( finData);
-        }).catch(err => console.log(err));;
-      } else {
-        console.log("no profile is there");
-      }
-    });
-
-
-  }
-);
-
 //bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 router.get(
   "/get/",
