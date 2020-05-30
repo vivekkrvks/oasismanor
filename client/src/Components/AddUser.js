@@ -668,7 +668,7 @@ class AddUser extends Component {
           {/* Below -> SnackBar for message print */}
           {this.state.loading && <Progress />} <MySnackbar onRef={ref => (this.child = ref)} />
           {/* Below is serch Section */}
-          <Grid item xs={12} md={12} lg={3} className={classes.root}>
+          <Grid item xs={12} md={12} lg={3}>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
