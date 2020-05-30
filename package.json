@@ -13,7 +13,7 @@
 	"keywords": [
 		"oasismanor"
 	],
-	"author": "Vivek",
+	"author": "Softechinfra",
 	"license": "ISC",
 	"dependencies": {
 		"@sendgrid/mail": "^6.4.0",
